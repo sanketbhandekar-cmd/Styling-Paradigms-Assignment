@@ -1,122 +1,111 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import { themeClass } from './styles/theme.css';
+import { Button } from './components/Button/Button';
+import { Badge } from './components/Badge/Badge';
+import { Card } from './components/Card/Card';
+import * as styles from './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className={`${themeClass} ${styles.appContainer}`}>
+      <h1>Exercise 2: Component Library (Vanilla Extract)</h1>
 
-      <div className="ticks"></div>
+      {/* Button Component Section */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Button Component</h2>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        <p>Variants:</p>
+        <div className={styles.row}>
+          <Button variant="primary">Primary</Button>
+          <Button variant="secondary">Secondary</Button>
+          <Button variant="danger">Danger</Button>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
+
+        <p style={{ marginTop: '12px' }}>Sizes:</p>
+        <div className={styles.row}>
+          <Button size="small">Small Button</Button>
+          <Button size="large">Large Button</Button>
+        </div>
+
+        <p style={{ marginTop: '12px' }}>States (Hover, Focus, Disabled):</p>
+        <div className={styles.row}>
+          <Button
+            variant="primary"
+            disabled={isDisabled}
+            onClick={() => setClickCount(clickCount + 1)}
+          >
+            Clicked {clickCount} times
+          </Button>
+          <Button variant="secondary" disabled={isDisabled}>
+            Secondary
+          </Button>
+          <Button variant="danger" disabled={isDisabled}>
+            Danger
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => setIsDisabled(!isDisabled)}
+          >
+            {isDisabled ? 'Enable Buttons' : 'Disable Buttons'}
+          </Button>
         </div>
       </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+      {/* Badge Component Section */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Badge Component</h2>
+        <div className={styles.row}>
+          <Badge variant="success">Success</Badge>
+          <Badge variant="warning">Warning</Badge>
+          <Badge variant="error">Error</Badge>
+        </div>
+      </section>
+
+      {/* Card Component Section */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>
+          Card Component (Responsive Grid)
+        </h2>
+        <div className={styles.grid}>
+          <Card>
+            <h3>Basic Plan</h3>
+            <p>Good for personal projects.</p>
+            <div>
+              <Badge variant="success">Active</Badge>
+            </div>
+            <div style={{ marginTop: '8px' }}>
+              <Button size="small">Select Plan</Button>
+            </div>
+          </Card>
+
+          <Card>
+            <h3>Pro Plan</h3>
+            <p>For growing teams and businesses.</p>
+            <div>
+              <Badge variant="warning">Popular</Badge>
+            </div>
+            <div style={{ marginTop: '8px' }}>
+              <Button size="small">Select Plan</Button>
+            </div>
+          </Card>
+
+          <Card>
+            <h3>Enterprise Plan</h3>
+            <p>Custom security and dedicated support.</p>
+            <div>
+              <Badge variant="error">Sold Out</Badge>
+            </div>
+            <div style={{ marginTop: '8px' }}>
+              <Button size="small" disabled>
+                Unavailable
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </section>
+    </div>
+  );
 }
-
-export default App
