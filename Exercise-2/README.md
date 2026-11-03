@@ -1,75 +1,24 @@
-# React + TypeScript + Vite
+# Exercise 2 - Type-Safe Component Library (Vanilla Extract)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Completed the type-safe component library assignment using React, TypeScript, and Vanilla Extract. Here is a summary of the implementation:
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+- Configured Vanilla Extract in the Vite setup using `@vanilla-extract/vite-plugin` and `@vanilla-extract/css`.
+- Defined a small set of shared design tokens in `src/styles/theme.css.ts` using `createTheme` (colors, spacing, typography, and border radius) to be used consistently across all components.
+- Kept styling definitions in dedicated `.css.ts` files separate from component markup (`.tsx`).
+- Created reusable components:
+  - `Button`:
+    - Base styles composed with variants using `styleVariants`
+    - Supported variants: `primary`, `secondary`, and `danger`
+    - Supported sizes: `small` and `large`
+    - Includes interaction states for hover, visible focus ring (`:focus-visible`), and disabled state (`:disabled` with reduced opacity and not-allowed cursor).
+  - `Card`:
+    - Base styling with background, border radius, border, and shadow from theme tokens
+    - Consistent spacing and responsive padding using build-time `@media` queries.
+  - `Badge`:
+    - Supported variants: `success`, `warning`, and `error`
+    - Composed with base pill styles and theme token colors.
+- Demonstrated responsive styling:
+  - Card padding adjusts for mobile screens (`<= 600px`).
+  - Card grid adapts from 1 column on mobile to 3 columns on larger screens using CSS media queries.
+- Verified build-time CSS generation:
+  - Running `npm run build` extracts all styles into static CSS (`dist/assets/*.css`) with zero runtime styling overhead in the browser.
